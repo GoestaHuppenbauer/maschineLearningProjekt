@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Schere Stein Papier</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@7.0.0/normalize.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/skeleton.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
+	
+	<script src="https://unpkg.com/ml5@0.3.0/dist/ml5.min.js"></script>
+
+  
+</head>
+
+<body>
+ 
+  <div class="example container">
+    
+      <div class="row">
+          <div class="one-third column">&nbsp;</div>
+          <div class="one-third column"><p><h5>Schere Stein Papier</h5 ></p></div>
+          <div class="one-third column">&nbsp;</div>    
+      </div>
+
+      <div class="row">
+          <div class="one-third column">&nbsp;</div>
+          <div class="one-third column"><canvas id="canv" height="300" width="300" style="border:1px solid #000000;"></canvas></div>
+          <div class="one-third column">&nbsp;</div>    
+      </div>
+
+    <div class="row"> 
+        <div class="one-third column">&nbsp;</div>
+        <div class="one-third column"><p><button type="button" onclick="startGame()" class="btn btn-primary">Start Game</button>     </p></div>
+        <div class="one-third column">&nbsp;</div>    
+    </div>
+    <input type="file" id="modelFiles" name="modelFiles" class="button-secondary" multiple/>
+    <button onclick="handleModelLoad()" id="buttonLoad" class="button-secondary">Load model</button>
+    <p id="statusModelLoad"></p>
+    <img id="start" src="images/start.jpg" height="300px";>
+    <img id="schere" src="images/schere.jpg" height="300px";>
+    <img id="stein" src="images/stein.jpg" height="300px";>
+    <img id="papier" src="images/papier.jpg" height="300px";>
+    <img id="drei" src="images/3.svg" height="300px";>
+    <img id="zwei" src="images/2.svg" height="300px";>
+    <img id="eins" src="images/1.svg" height="300px";>  </div>
+   
+  <script src="ssp.js"></script>
+  <script src="ssp_recognize.js"></script>
+</body>
+
+</html>
