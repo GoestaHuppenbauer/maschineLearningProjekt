@@ -1,5 +1,8 @@
 
-let mobilenet;
+
+
+
+let featureExtractor;
 let classifier;
 let video;
 let label = '';
@@ -8,6 +11,10 @@ let steinButton;
 let papierButton;
 let trainButton;
 let saveButton;
+let amountStein = 0;
+let amountPapier = 0;
+let amountSchere = 0;
+let numClasses = 3;
 
 //Die Funktion lädt ein schon trainiertes Modell
 function handleModelLoad() {
@@ -56,7 +63,7 @@ function gotResults(error, result) {
     console.log("Error")
   } else {
     label = result;
-    console.log(result)
+    console.log(result[0].label)
     classifier.classify(gotResults);
   }
 }
@@ -66,22 +73,27 @@ function setup() {
   video = createCapture(VIDEO);
   video.hide();
   background(0);
-  mobilenet = ml5.featureExtractor('MobileNet', modelReady);
-  classifier = mobilenet.classification(video, videoReady);
+  featureExtractor = ml5.featureExtractor('featureExtractor', modelReady);
+  featureExtractor.numClasses = numClasses;
+  classifier = featureExtractor.classification(video, videoReady);
 
   //BUTTON == SCHERE
   schereButton = createButton('schere');
   schereButton.mousePressed(function() {
+    select('#amountOfSchereImages').html(amountSchere++);
     classifier.addImage('schere');
   });
 //BUTTON STEIN
   steinButton = createButton('stein');
   steinButton.mousePressed(function() {
+    select('#amountOfSteinImages').html(amountStein++);
     classifier.addImage('stein');
   });
+
 //BUTTON PAPIER
   papierButton = createButton('papier');
   papierButton.mousePressed(function() {
+    select('#amountOfPapierImages').html(amountPapier++);
     classifier.addImage('papier');
   });
 //BUTTON TRAIN
