@@ -1,5 +1,7 @@
-let img, start, drei , zwei, eins, schere, stein, papier, human;
+let pcOptions, start, drei , zwei, eins, schere, stein, papier;
 let options = [];
+let computer="";
+let human = "";
 
 
 
@@ -15,11 +17,12 @@ function preload() {
     stein = loadImage('images/stein.jpg');
     papier = loadImage('images/papier.jpg');
     options=[schere,stein,papier];
+    options_string=['schere','stein','papier'];
 }
 function setup() {
     createCanvas(300,300);
     video = createCapture(VIDEO);
-    video.hide();
+    //video.hide();
     
     featureExtractor = ml5.featureExtractor('mobilenet',{numLabels:3}, modelReady);
     classifier = featureExtractor.classification(video, videoReady);}
@@ -28,26 +31,35 @@ function draw() {
     background(start);
     fill(255);
     textSize(16);
-    text(label, 10, height - 10);}
-function startGame(){myVar = setTimeout(dreiFunction, 1000);}
+}
+
+function startGame(){
+  myVar = setTimeout(dreiFunction, 1000);
+  console.log("Start Game");}
 
 function dreiFunction() {
+  console.log("Drei");
     background(drei);
     myVar = setTimeout(zweiFunction, 1000);
+    
 }
 function zweiFunction() {
+    console.log("Zwei");
     background(zwei);
     myVar = setTimeout(einsFunction, 1000);
 }
 function einsFunction() {
+    console.log("Eins");
    background(eins);
     myVar = setTimeout(displayRandom, 1000);
 }
 function displayRandom() {
     var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
-    var computer = options[randomNumber];
+     computer = options_string[randomNumber];
     background(options[randomNumber]);
-    win();
+    
+    classifier.classify(gotResults);  
+    
 }
 
 
@@ -88,40 +100,48 @@ function gotResults(error, result) {
   if (error) {
     console.log("Error")
   } else {
+    
     if (result && result[0]) {
         label = result[0].label;
-        human=label;}
+        human=label;
+        
+        win();
+      }
+      
     
-    classifier.classify(gotResults);
   }
 }
 
   
 function win(){
-    var pcOptions = computer;
-    var userOptions = human;
 
     
-        if(img[i] == userOptions){
-            Window.alert("unentschieden");
+    var pcOptions = computer;
+    var userOptions = human;
+    console.log("Computer: "+pcOptions);
+    console.log("Spieler: "+userOptions);
+
+    
+        if(pcOptions == userOptions){
+           console.log("unentschieden");
             //papier
-        }else if (img == "papier" && userOptions == "stein"){
-            Window.alert("bot gewinnt mit papier");
+        }else if (pcOptions == "papier" && userOptions == "stein"){
+            console.log("bot gewinnt mit papier");
             }//schere
-            if(img == "schere" &&   userOptions == "papier"){
-                Window.alert("bot gewinnt mit schere");
+            else if(pcOptions == "schere" &&   userOptions == "papier"){
+               console.log("bot gewinnt mit schere");
             }//stein
-            if(img == "stein"  &&   userOptions == "schere"){
-                Window.alert("bot gewinnt mit stein");
+            else if(pcOptions == "stein"  &&   userOptions == "schere"){
+                console.log("bot gewinnt mit stein");
             }
-            if(img == "papier"  &&   userOptions == "schere"){
-                Window.alert("Nutzer gewinnt mit stein");
+            else if(pcOptions == "papier"  &&   userOptions == "schere"){
+                console.loadImage("Nutzer gewinnt mit stein");
             }
-            if(img == "schere"  &&   userOptions == "stein"){
-                Window.alert("Nutzer gewinnt mit schere");
+            else if(pcOptions == "schere"  &&   userOptions == "stein"){
+                console.log("Nutzer gewinnt mit schere");
             }
-            if(img == "stein"  &&   userOptions == "papier"){
-                Window.alert("Nutzer gewinnt mit papier");
+            else if(pcOptions == "stein"  &&   userOptions == "papier"){
+               console.log("Nutzer gewinnt mit papier");
             }
-        
+            else {console.log("Kein Spiel");}
     }
