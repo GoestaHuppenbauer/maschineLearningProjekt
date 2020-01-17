@@ -2,19 +2,11 @@
 
 
 
-let featureExtractor;
-let classifier;
-let video;
+let featureExtractor,classifier,video,schereButton,steinButton,papierButton,trainButton,saveButton;
 let label = '';
-let schereButton;
-let steinButton;
-let papierButton;
-let trainButton;
-let saveButton;
 let amountStein = 0;
 let amountPapier = 0;
 let amountSchere = 0;
-let numClasses = 3;
 
 //Die Funktion lädt ein schon trainiertes Modell
 function handleModelLoad() {
@@ -62,8 +54,8 @@ function gotResults(error, result) {
   if (error) {
     console.log("Error")
   } else {
-    label = result;
-    console.log(result[0].label)
+    if (result && result[0]) {label = result[0].label;}
+    console.log(result)
     classifier.classify(gotResults);
   }
 }
@@ -73,8 +65,7 @@ function setup() {
   video = createCapture(VIDEO);
   video.hide();
   background(0);
-  featureExtractor = ml5.featureExtractor('featureExtractor', modelReady);
-  featureExtractor.numClasses = numClasses;
+  featureExtractor = ml5.featureExtractor('mobilenet',{numLabels:3}, modelReady);
   classifier = featureExtractor.classification(video, videoReady);
 
   //BUTTON == SCHERE
