@@ -99,11 +99,7 @@ saveButton.mousePressed(function() {
   classifier.save()
     .catch(e => select("#statusModelSave").html(e.message));
 });
-//BUTTON LOAD
-loadButton = createButton('load');
-//hier wird die Lade Funktion von Steffen aufgerufen
-loadButton.mousePressed(handleModelLoad);
-}
+
 
 function draw() {
   background(0);

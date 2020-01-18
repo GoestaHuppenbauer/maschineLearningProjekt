@@ -1,23 +1,38 @@
-let img, start, drei , zwei, eins, schere, stein, papier, human;
+let pcOptions, start, drei , zwei, eins, schere, stein, papier;
 let options = [];
+let computer="";
+let human = "";
+let game = false;
+
+let data = {}; // Global object to hold results from the loadJSON call
+let players = []; // Global array to hold all bubble objects
+let players_array = []; // Global array to hold all bubble objects
 
 
-
-let featureExtractor,classifier,video;
+let featureExtractor,classifier,video,cnv;
 let label = '';
 
+
+
+
+
 function preload() {
+    data = loadJSON('players.json');
     start = loadImage('images/start.jpg');
-    drei = loadImage('images/3.svg');
     zwei = loadImage('images/2.svg');
     eins = loadImage('images/1.svg');
     schere = loadImage('images/schere.jpg');
     stein = loadImage('images/stein.jpg');
     papier = loadImage('images/papier.jpg');
     options=[schere,stein,papier];
+    options_string=['schere','stein','papier'];
 }
 function setup() {
-    createCanvas(300,300);
+    
+    loadData();
+    cnv = createCanvas(300,300);
+    cnv.position((windowWidth/2)-150,(windowHeight/2)-150);
+    cnv.background(start);
     video = createCapture(VIDEO);
     video.hide();
     
@@ -25,29 +40,39 @@ function setup() {
     classifier = featureExtractor.classification(video, videoReady);}
 
 function draw() {
-    background(start);
+    
     fill(255);
     textSize(16);
-    text(label, 10, height - 10);}
-function startGame(){myVar = setTimeout(dreiFunction, 1000);}
-
-function dreiFunction() {
-    background(drei);
-    myVar = setTimeout(zweiFunction, 1000);
+  
 }
+
+function startGame(){
+  
+  
+  var inputField = document.getElementById("myOverlay");
+  inputField.style.display="none";
+  myVar = setTimeout(zweiFunction, 1000);
+  console.log("Start Game");}
+
+
+
 function zweiFunction() {
-    background(zwei);
-    myVar = setTimeout(einsFunction, 1000);
+  console.log("Zwei");
+  cnv.background(zwei);
+  myVar = setTimeout(einsFunction, 1000);
+  
 }
 function einsFunction() {
-   background(eins);
-    myVar = setTimeout(displayRandom, 1000);
+    console.log("Eins");
+    cnv.background(eins);
+    myVar= setTimeout(displayRandom,1000);
 }
 function displayRandom() {
-    var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
-    var computer = options[randomNumber];
-    background(options[randomNumber]);
-    win();
+    
+    
+    
+    gotResults();
+    classifier.classify(gotResults);  
 }
 
 
@@ -66,7 +91,9 @@ function handleModelLoad() {
     //Hier wird die Modell geladen Funktion aufgerufen 
     customModelReady();
     //Hier wird Prediction gestartet
-    gotResults();
+    
+    var inputField = document.getElementById("myOverlay");
+    inputField.style.display="block";
   }
 }
 
@@ -88,40 +115,76 @@ function gotResults(error, result) {
   if (error) {
     console.log("Error")
   } else {
-    if (result && result[0]) {
-        label = result[0].label;
-        human=label;}
     
-    classifier.classify(gotResults);
+    if (result && result[0]  ) {
+        label = result[0].label;
+        human=label;
+        win();
+      }
+      
+    
   }
 }
 
   
 function win(){
+  var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
+  computer = options_string[randomNumber];
+    cnv.background(options[randomNumber]);
     var pcOptions = computer;
     var userOptions = human;
+    console.log("Computer: "+pcOptions);
+    console.log("Spieler: "+userOptions);
 
     
-        if(img[i] == userOptions){
-            Window.alert("unentschieden");
+        if(pcOptions == userOptions){
+           console.log("unentschieden");
             //papier
-        }else if (img == "papier" && userOptions == "stein"){
-            Window.alert("bot gewinnt mit papier");
+        }else if (pcOptions == "papier" && userOptions == "stein"){
+            console.log("bot gewinnt mit papier");
             }//schere
-            if(img == "schere" &&   userOptions == "papier"){
-                Window.alert("bot gewinnt mit schere");
+            else if(pcOptions == "schere" &&   userOptions == "papier"){
+               console.log("bot gewinnt mit schere");
             }//stein
-            if(img == "stein"  &&   userOptions == "schere"){
-                Window.alert("bot gewinnt mit stein");
+            else if(pcOptions == "stein"  &&   userOptions == "schere"){
+                console.log("bot gewinnt mit stein");
             }
-            if(img == "papier"  &&   userOptions == "schere"){
-                Window.alert("Nutzer gewinnt mit stein");
+            else if(pcOptions == "papier"  &&   userOptions == "schere"){
+                console.log("Nutzer gewinnt mit stein");
             }
-            if(img == "schere"  &&   userOptions == "stein"){
-                Window.alert("Nutzer gewinnt mit schere");
+            else if(pcOptions == "schere"  &&   userOptions == "stein"){
+                console.log("Nutzer gewinnt mit schere");
             }
-            if(img == "stein"  &&   userOptions == "papier"){
-                Window.alert("Nutzer gewinnt mit papier");
+            else if(pcOptions == "stein"  &&   userOptions == "papier"){
+               console.log("Nutzer gewinnt mit papier");
             }
+            else {console.log("Kein Spiel");}
+    }
+
+
+    function loadData() {
+      let players = data['players'];
+      for (let i = 0; i < players.length; i++) {
+        // Get each object in the array
+        let player = players[i];
+        let username = player['username'];
+        let points = player['points'];
+        let timestamp = player['timestamp'];
+        var table = document.getElementById("myTable");
+        print(table.rows);
+        var row = table.insertRow(1);
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        // Add some text to the new cells:
+        cell1.innerHTML = username;
+        cell2.innerHTML = points;
+
+    
+        // Put object in array
+        //players_array.push({username,points, timestamp});
         
+        console.log(username);
+      }
     }

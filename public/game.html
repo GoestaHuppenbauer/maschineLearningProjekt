@@ -4,7 +4,9 @@
 <head>
   <title>Schere Stein Papier</title>
   <link rel="stylesheet" href="https://unpkg.com/normalize.css@7.0.0/normalize.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/stylesheet.css">
   <link rel="stylesheet" href="style/skeleton.css">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-cache">
   <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
@@ -23,21 +25,48 @@
           <div class="one-third column"><p><h5>Schere Stein Papier</h5 ></p></div>
           <div class="one-third column">&nbsp;</div>    
       </div>
-
+      
+      <div id="myOverlay" class="overlay">
+            <div class="wrapped">
+              <h2>Erfinde einen Username</h2>
+              <form>
+                  <label for="exampleEmailInput">Dein Nutzername</label>
+                  <input class="u-full-width" type="text" placeholder="Nutzername" id="exampleEmailInput">
+                  <button type="button"  onclick="startGame()" class="btn btn-primary">Los geht´s</button>
+                </form> 
+            </div>
+      </div>
       <div class="row">
           <div class="one-third column">&nbsp;</div>
           <div class="one-third column"><script src="ssp.js"></script></div>
           <div class="one-third column">&nbsp;</div>    
       </div>
-
+      <div class="row" style="height:50vh"></div>
     <div class="row"> 
         <div class="one-third column">&nbsp;</div>
-        <div class="one-third column"><p><button type="button"  class="btn btn-primary">Start Game</button>     </p></div>
+        <div class="one-third column"><p><button type="button"  onclick="startGame()" class="btn btn-primary">Start Game</button></p></div>
         <div class="one-third column">&nbsp;</div>    
     </div>
-    <input type="file" id="modelFiles" name="modelFiles" class="button-secondary" multiple/>
-    <button onclick="handleModelLoad()" id="buttonLoad" class="button-secondary">Load model</button>
-    <p id="statusModelLoad"></p>
+    <div class="row">
+      <table id="myTable" class="u-full-width">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Punkte</th>
+            <tbody></tbody>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="row" style="height:100vh"></div>
+    <div class="row"> 
+      <div class="one-third column"><input type="file" id="modelFiles" name="modelFiles" class="button-secondary" multiple/></div>
+      <div class="one-third column"><button onclick="handleModelLoad()" id="buttonLoad" class="button-secondary">Load model</button></div>
+      <div class="one-third column"><p id="statusModelLoad"></p></div>    
+  </div>
+    
+    
+    
    
     
    
