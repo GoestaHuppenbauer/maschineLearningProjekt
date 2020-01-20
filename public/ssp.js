@@ -8,7 +8,7 @@ let label = "";
 let game = false;
 let round =0;
 let newPlayers = {};
-
+var userOptions;
 let data = {}; // Global object to hold results from the loadJSON call
 let players = []; // Global array to hold all player objects
 let players_array = []; // Global array to hold all player objects
@@ -138,7 +138,7 @@ function win(){
   computer = options_string[randomNumber];
     cnv.background(options[randomNumber]);
     var pcOptions = computer;
-    var userOptions = human;
+    userOptions = human;
     console.log("Computer: "+pcOptions);
     console.log("Spieler: "+userOptions);
 
@@ -221,71 +221,85 @@ function loadData() {
       }
     }
 function youLose(){
-  round++;
+  
   console.log("You Lose");
   document.body.style.background = "red";
-  if(round>=3){
+  if(round>3){
     console.log("Game is over");
+    
     setTimeout(backToWhite, 500);
+    
   }
   else {
-    currentGame.points[round] = 0;
+    currentGame.points[round] = -1;
     currentGame.hand[round] = human;
     console.log(currentGame);
-    eclipseBuild = "circle"+round;
+    eclipseBuild = "circle"+(round+1);
     console.log(eclipseBuild);
     document.getElementById(eclipseBuild).style.background = "red";
+    
     setTimeout(backToWhite, 500);
+    
   }
   
   
     };
 
-  function unentschieden(){
-      round++;
+function unentschieden(){
+  
       console.log("Unentschieden");
       document.body.style.background = "yellow";
-      if(round>=3){
+      if(round>3){
         console.log("Game is over");
+        
         setTimeout(backToWhite, 500);
+        
       }
       else {
         currentGame.points[round] = 0;
         currentGame.hand[round] = human;
         console.log(currentGame);
-        eclipseBuild = "circle"+round;
+        eclipseBuild = "circle"+(round+1);
         console.log(eclipseBuild);
         document.getElementById(eclipseBuild).style.background = "yellow";
+        
         setTimeout(backToWhite, 500);
+       
       }
       
       
         };
 
 function youWin(){
-  round++;
+  
   console.log("You Win");
   document.body.style.background = "green";
-  if(round>=3){
+  if(round>3){
     
     console.log("Game is over");
+    
     setTimeout(backToWhite, 500);
+    
   }
   else{
     currentGame.points[round] = 1;
     currentGame.hand[round] = human;
     console.log(currentGame);
-    eclipseBuild = "circle"+round;
+    eclipseBuild = "circle"+(round+1);
     console.log(eclipseBuild);
     document.getElementById(eclipseBuild).style.background = "green";
+    
     setTimeout(backToWhite, 500);
+    
   }
   
   
 };
 
 function backToWhite(){
+  
   document.body.style.background = "white";
+  round= round+1;
   if(round>=3){
     
    endGame();

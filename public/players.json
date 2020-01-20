@@ -41,6 +41,19 @@
         "stein",
         "stein"
       ]
+    },
+    {
+      "username": "gustavo",
+      "points": [
+        0,
+        1,
+        0
+      ],
+      "hand": [
+        "",
+        "stein",
+        "stein"
+      ]
     }
   ]
 }
