@@ -1,2 +1,46 @@
-{"players":[{"username":"goesta","points":30,"timestamp":190117},{"username":"mia","points":20,"timestamp":190118}]
+{
+  "players": [
+    {
+      "username": "mia",
+      "points": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "username": "goesta",
+      "points": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "username": "manu",
+      "points": [
+        0,
+        0,
+        0
+      ],
+      "hand": [
+        "",
+        "stein",
+        "stein"
+      ]
+    },
+    {
+      "username": "manueeeeeeel",
+      "points": [
+        0,
+        0,
+        0
+      ],
+      "hand": [
+        "",
+        "stein",
+        "stein"
+      ]
     }
+  ]
+}

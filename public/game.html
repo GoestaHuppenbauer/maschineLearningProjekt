@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://unpkg.com/normalize.css@7.0.0/normalize.css" crossorigin="anonymous">
   <link rel="stylesheet" href="style/stylesheet.css">
   <link rel="stylesheet" href="style/skeleton.css">
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-cache">
   <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
@@ -22,7 +22,7 @@
     
       <div class="row">
           <div class="one-third column">&nbsp;</div>
-          <div class="one-third column"><p><h5>Schere Stein Papier</h5 ></p></div>
+          <div class="one-third column center"><p><h5>Schere Stein Papier</h5 ></p></div>
           <div class="one-third column">&nbsp;</div>    
       </div>
       
@@ -31,8 +31,8 @@
               <h2>Erfinde einen Username</h2>
               <form>
                   <label for="exampleEmailInput">Dein Nutzername</label>
-                  <input class="u-full-width" type="text" placeholder="Nutzername" id="exampleEmailInput">
-                  <button type="button"  onclick="startGame()" class="btn btn-primary">Los geht´s</button>
+                  <input class="u-full-width" type="text" placeholder="Nutzername" id="username">
+                  <button type="button"  onclick="newGame()" class="btn btn-primary">Los geht´s</button>
                 </form> 
             </div>
       </div>
@@ -42,9 +42,20 @@
           <div class="one-third column">&nbsp;</div>    
       </div>
       <div class="row" style="height:50vh"></div>
-    <div class="row"> 
+      <div class="row"> 
+          <div class="one-third column">&nbsp;</div>
+          <div class="one-third column">
+            <div class="flex-container">
+              <div class="circle1" id="circle1"></div>
+              <div class="circle2" id="circle2"></div>
+              <div class="circle3" id="circle3"></div>
+            </div>
+          </div>
+          <div class="one-third column">&nbsp;</div>    
+      </div>
+      <div class="row"> 
         <div class="one-third column">&nbsp;</div>
-        <div class="one-third column"><p><button type="button"  onclick="startGame()" class="btn btn-primary">Start Game</button></p></div>
+        <div class="one-third column center"><p><button type="button"  onclick="startGame()" id="startGameButton" class="btn btn-primary">Start Game</button></p></div>
         <div class="one-third column">&nbsp;</div>    
     </div>
     <div class="row">
@@ -58,7 +69,7 @@
         </thead>
       </table>
     </div>
-    <div class="row" style="height:100vh"></div>
+    
     <div class="row"> 
       <div class="one-third column"><input type="file" id="modelFiles" name="modelFiles" class="button-secondary" multiple/></div>
       <div class="one-third column"><button onclick="handleModelLoad()" id="buttonLoad" class="button-secondary">Load model</button></div>
