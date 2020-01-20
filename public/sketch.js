@@ -100,7 +100,7 @@ saveButton.mousePressed(function() {
     .catch(e => select("#statusModelSave").html(e.message));
 });
 
-
+};
 function draw() {
   background(0);
   image(video, 0, 0, 320, 240);
@@ -108,4 +108,4 @@ function draw() {
   textSize(16);
   text(label, 10, height - 10);
   
-} 
+};
