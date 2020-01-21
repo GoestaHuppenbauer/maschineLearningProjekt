@@ -1,57 +1,92 @@
 {
   "players": [
     {
+      "username": "Gümther",
+      "points": [
+        -1,
+        1,
+        1
+      ],
+      "hand": [
+        "schere",
+        "schere",
+        "schere"
+      ],
+      "bot": [
+        "schere",
+        "papier",
+        "stein"
+      ]
+    },
+    {
+      "username": "Maurice",
+      "points": [
+        0,
+        1,
+        1
+      ],
+      "hand": [
+        "schere",
+        "schere",
+        "papier"
+      ],
+      "bot": [
+        "schere",
+        "papier",
+        "stein"
+      ]
+    },
+    {
+      "username": "Gösta",
+      "points": [
+        -1,
+        0,
+        -1
+      ],
+      "hand": [
+        "schere",
+        "papier",
+        "schere"
+      ],
+      "bot": [
+        "stein",
+        "papier",
+        "stein"
+      ]
+    },
+    {
+      "username": "Noah",
+      "points": [
+        -1,
+        1,
+        0
+      ],
+      "hand": [
+        "schere",
+        "schere",
+        "stein"
+      ],
+      "bot": [
+        "stein",
+        "papier",
+        "stein"
+      ]
+    },
+    {
       "username": "mia",
       "points": [
-        0,
-        1,
-        0
-      ]
-    },
-    {
-      "username": "goesta",
-      "points": [
-        0,
         -1,
-        0
-      ]
-    },
-    {
-      "username": "manu",
-      "points": [
-        0,
-        0,
-        0
+        -1,
+        1
       ],
       "hand": [
-        "",
         "stein",
-        "stein"
-      ]
-    },
-    {
-      "username": "manueeeeeeel",
-      "points": [
-        0,
-        0,
-        0
+        "papier",
+        "papier"
       ],
-      "hand": [
-        "",
-        "stein",
-        "stein"
-      ]
-    },
-    {
-      "username": "gustavo",
-      "points": [
-        0,
-        1,
-        0
-      ],
-      "hand": [
-        "",
-        "stein",
+      "bot": [
+        "papier",
+        "schere",
         "stein"
       ]
     }

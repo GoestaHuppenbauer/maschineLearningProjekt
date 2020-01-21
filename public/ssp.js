@@ -1,6 +1,6 @@
 
 
-let pcOptions, start, drei , zwei, eins, schere, stein, papier,featureExtractor,classifier,video,cnv;;
+let pcOptions,start, drei , zwei, eins, schere, stein, papier,neuralNetwork,featureExtractor,classifier,video,cnv;
 let options = [];
 let computer="";
 let human = "";
@@ -12,10 +12,16 @@ var userOptions;
 let data = {}; // Global object to hold results from the loadJSON call
 let players = []; // Global array to hold all player objects
 let players_array = []; // Global array to hold all player objects
-let currentGame = {'username':'','points':[0,0,0],'hand':["","",""]};
-
-
-
+let currentGame = {'username':'','points':[0,0,0],'hand':["","",""],'bot':["","",""]};
+let options_string=['schere','stein','papier'];
+let options_Nn = {
+  inputs: ['round', 'result'],
+  outputs: ['label'],
+  type: 'classification'
+};
+let options_train = {
+  epochs:100
+};
 
 
 
@@ -29,22 +35,27 @@ function preload() {
     stein = loadImage('images/stein.svg');
     papier = loadImage('images/papier.svg');
     options=[schere,stein,papier];
-    options_string=['schere','stein','papier'];
+    
 }
 function setup() {
-    //Sobald alles geladen ist wird die Setup aufgerufen.
-    loadData(); //hier wird die Funktion loadData aufgerufen welche das Json mit den Spielern verarbeitet
+  //Sobald alles geladen ist wird die Setup aufgerufen.
     cnv = createCanvas(300,300); //Auf dem Canvas wird für den User der aktuelle Stand im Spiel angezeigt
     cnv.position((windowWidth/2)-150,(windowHeight/2)-150);
     cnv.background(start);
     video = createCapture(VIDEO); //für die Bilderkennung wird die Webcam abgefragt
     video.hide(); //Damit das Webcambild nicht ablenkt wird es ausgeblendet
+    //neuralNetwork = ml5.neuralNetwork(options_Nn);
+    
     featureExtractor = ml5.featureExtractor('mobilenet',{numLabels:3}, modelReady); //Der Feature Extractor wird definiert
     classifier = featureExtractor.classification(video, videoReady);  
+    loadData(); //hier wird die Funktion loadData aufgerufen welche das Json mit den Spielern verarbeitet
+    
 }
 
+
+
 function draw() {
-    
+
   
 }
 function newGame(){
@@ -79,6 +90,22 @@ function displayRandom() {
   //Diese Funktion könnte auch startPrediction heißen, sie beginnt mit der Bilderkennung
     gotResults();
     classifier.classify(gotResults);  
+    //console.log("start predict")
+    //if(0){
+      console.log(round+"round");
+      //neuralNetwork.classify(function (results) {
+        //console.log(results);
+        //computer = results;
+      //});
+      //  }
+    //else{
+      //console.log("first round");
+      //var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
+      //console.log(randomNumber);
+      //computer = options_string[randomNumber];
+      //console.log(computer);
+   // }
+    
 }
 
 
@@ -131,13 +158,15 @@ function gotResults(error, result) {
   }
 }
 
+
   
 function win(){
   //Diese Funktion klärt wer die aktuelle Runde gewinnt.
-  var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
-  computer = options_string[randomNumber];
+    var randomNumber = Math.floor(Math.random() * (+3 - +0)) + +0; 
+    computer = options_string[randomNumber];
+  
     cnv.background(options[randomNumber]);
-    var pcOptions = computer;
+    pcOptions = computer;
     userOptions = human;
     console.log("Computer: "+pcOptions);
     console.log("Spieler: "+userOptions);
@@ -160,11 +189,11 @@ function win(){
                 youLose();
             }
             else if(pcOptions == "papier"  &&   userOptions == "schere"){
-                console.log("Nutzer gewinnt mit stein");
+                console.log("Nutzer gewinnt mit schere");
                 youWin();
             }
             else if(pcOptions == "schere"  &&   userOptions == "stein"){
-                console.log("Nutzer gewinnt mit schere");
+                console.log("Nutzer gewinnt mit stein");
                 youWin();
             }
             else if(pcOptions == "stein"  &&   userOptions == "papier"){
@@ -185,24 +214,32 @@ function loadData() {
       
       players = data['players'];
       
-      
-      
-      
-      
+
       for (let i = 0; i < players.length; i++) {
         // Get each object in the array
         let player = players[i];
         let username = player['username'];
         let points = player['points'];
-        
+        let bot = player['bot'];
+        let hand = player['hand'];
         let points_table = 0;
         for(var rounds_i = 0;rounds_i<=2;rounds_i++){
          let pointsPerRound =  points[rounds_i]*10;
-         
          points_table = points_table + pointsPerRound;
         }
+        //for(var rounds_e = 1;rounds_e<=2;rounds_e++){
+          let newData = {
+            //round:rounds_e,
+            //result:hand[rounds_e-1]
+          }
+          
+          let result = {
+            //label:hand[rounds_e]
+          }
+          //neuralNetwork.addData(newData,result);
+        // }
         
-        let timestamp = player['timestamp'];
+        
         var table = document.getElementById("myTable");
         
         var row = table.insertRow(1);
@@ -219,7 +256,18 @@ function loadData() {
         //players_array.push({username,points, timestamp});
        
       }
+      
+      //console.log("Starting Training Neural Network");
+      //neuralNetwork.normalizeData();
+      //neuralNetwork.train(options_train,whileTraining_Nn,finished_Nn);
     }
+function whileTraining_Nn(epoch,loss){
+  console.log(loss);
+  
+};
+function finished_Nn(){
+  console.log("Finished Training");
+};
 function youLose(){
   
   console.log("You Lose");
@@ -233,6 +281,7 @@ function youLose(){
   else {
     currentGame.points[round] = -1;
     currentGame.hand[round] = human;
+    currentGame.bot[round] = computer;
     console.log(currentGame);
     eclipseBuild = "circle"+(round+1);
     console.log(eclipseBuild);
@@ -258,6 +307,7 @@ function unentschieden(){
       else {
         currentGame.points[round] = 0;
         currentGame.hand[round] = human;
+        currentGame.bot[round] = computer;
         console.log(currentGame);
         eclipseBuild = "circle"+(round+1);
         console.log(eclipseBuild);
@@ -284,6 +334,7 @@ function youWin(){
   else{
     currentGame.points[round] = 1;
     currentGame.hand[round] = human;
+    currentGame.bot[round] = computer;
     console.log(currentGame);
     eclipseBuild = "circle"+(round+1);
     console.log(eclipseBuild);
@@ -328,5 +379,6 @@ function endGame(){
   data.players = players;
   console.log(data);
   saveJSON(data, 'players.json');
+  round =0;
 
 }
